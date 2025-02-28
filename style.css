@@ -192,6 +192,7 @@ body { background: var(--white); }
   display: flex;
   align-items: center;
   gap: 5px;
+  margin-top: 10px;
 }
 
 .social-link {
@@ -204,7 +205,9 @@ body { background: var(--white); }
 }
 .social-link:hover { background: hsla(0, 0%, 100%, 0.2); }
 
-.header .btn { --padding: 4px 20px; }
+.header .btn { 
+  margin-top: 5px;
+  --padding: 6px 20px; }
 
 .header .navbar {
   position: fixed;
