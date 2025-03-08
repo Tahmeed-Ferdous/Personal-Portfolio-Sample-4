@@ -785,6 +785,10 @@ address {
   .copyright { margin-bottom: 0; }
   .footer-bottom-list { justify-content: flex-end; }
 
+  .footer-top .container {
+    margin-left: 130px;
+  }
+
 }
 
 
