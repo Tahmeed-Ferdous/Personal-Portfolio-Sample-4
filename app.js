@@ -132,6 +132,89 @@ function resetTimer() {
   currentTime = 0;
   updateDisplay();
 }
-startBtn.addEventListener('click', startTimer);
-stopBtn.addEventListener('click', stopTimer);
-resetBtn.addEventListener('click', resetTimer);
+if (startBtn) {
+  startBtn.addEventListener('click', startTimer);
+}
+if (stopBtn) {
+  stopBtn.addEventListener('click', stopTimer);
+}
+if (resetBtn) {
+  resetBtn.addEventListener('click', resetTimer);
+}
+
+
+
+// to do list
+
+const taskInput = document.getElementById('task-input');
+const taskList = document.getElementById('tasklist');
+const todoForm = document.getElementById('todoform');
+
+// Retrieve tasks from localStorage or initialize as an empty array
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+// Save tasks to localStorage
+function saveTasks() {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Render tasks on the page
+function renderTasks() {
+  taskList.innerHTML = '';
+  tasks.forEach((task, index) => {
+    // Create a unique container for each task
+    const taskItem = document.createElement('div');
+    taskItem.classList.add('todo-task');
+    if (task.completed) {
+      taskItem.classList.add('completed');
+    }
+
+    // Left side container with checkbox and task text
+    const taskLeftDiv = document.createElement('div');
+    taskLeftDiv.className = 'task-left';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = task.completed;
+    checkbox.addEventListener('change', () => {
+      tasks[index].completed = checkbox.checked;
+      saveTasks();
+      renderTasks();
+    });
+
+    const span = document.createElement('span');
+    span.textContent = task.text;
+
+    taskLeftDiv.appendChild(checkbox);
+    taskLeftDiv.appendChild(span);
+    taskItem.appendChild(taskLeftDiv);
+
+    // Delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'delete-bttn';
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', () => {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    });
+    taskItem.appendChild(deleteButton);
+
+    taskList.appendChild(taskItem);
+  });
+}
+
+// Handle adding a new task
+todoForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const taskText = taskInput.value.trim();
+  if (taskText !== '') {
+    tasks.push({ text: taskText, completed: false });
+    saveTasks();
+    renderTasks();
+    taskInput.value = '';
+  }
+});
+
+// Initial render on page load
+renderTasks();

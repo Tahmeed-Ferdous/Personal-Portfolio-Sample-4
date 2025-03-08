@@ -1007,9 +1007,99 @@ button {
   font-size: 16px;
   cursor: pointer;
   border: 1px solid #333;
-  background-color: #fff;
   transition: background-color 0.2s;
 }
 button:hover {
   background-color: #ddd;
+}
+
+/* -------------------------------------------------- */
+
+/* #to do list */
+
+* {
+  box-sizing: border-box;
+}
+
+.todolistcontainer {
+  background: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+}
+
+#todocontainer {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  flex: 1;
+}
+
+.todobttn {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+.todobttn:hover {
+  background-color: #555;
+}
+
+#tasklist {
+  padding: 0;
+}
+
+.todo-task {
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+.todo-task.completed span {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.task-left {
+  display: flex;
+  align-items: center;
+}
+
+.task-left input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.delete-bttn {
+  background: #f00;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-bttn:hover {
+  background: #f55;
 }
