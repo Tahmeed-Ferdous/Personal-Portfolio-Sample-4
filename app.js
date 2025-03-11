@@ -119,7 +119,7 @@ function startTimer() {
     } else {
       updateDisplay();
     }
-  }, 2000);
+  }, 200);
 }
 function stopTimer() {
   if (validity !== null) {
