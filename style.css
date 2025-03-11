@@ -739,6 +739,12 @@ address {
   }
 }
 
+.supcontainer {
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
 
 
 @media (min-width: 580px) {
