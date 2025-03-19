@@ -739,6 +739,12 @@ address {
   }
 }
 
+.supcontainer {
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
 
 
 @media (min-width: 580px) {
@@ -786,7 +792,7 @@ address {
   .footer-bottom-list { justify-content: flex-end; }
 
   .footer-top .container {
-    margin-left: 130px;
+    margin-left: 115px;
   }
 
 }
