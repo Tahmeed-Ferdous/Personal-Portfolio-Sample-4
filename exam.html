@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    table { margin: 20px auto; border-collapse: collapse; }
+    td, th { border: 1px solid #ccc; padding: 8px; }
+    input, button { margin: 10px; padding: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Random Quiz</h1>
+  <p id="instructions">
+    You have 30 seconds to answer as many questions as possible. Type an integer (1–4) for your answer.
+    Each correct answer gives you 5 points, which are stored in localStorage. Click "Reset Points" to clear your score.
+  </p>
+  <p id="timerDisplay">Time Left: 30s</p>
+  <p id="pointsDisplay">Points: 0</p>
+  <button id="startBtn">Start Quiz</button>
+  <button id="resetBtn">Reset Points</button>
+  
+  <table id="quizTable">
+    <tbody id="quizBody"></tbody>
+  </table>
+  <input type="text" id="answerInput" placeholder="Enter option number (1–4)">
+  <button id="submitBtn">Answer</button>
+
+  <script>
+    // (i) Questions array (will be randomized at start)
+    const questions = [
+      {
+        id: 1,
+        question: "What is the capital of France?",
+        options: ["Berlin", "Madrid", "Paris", "Rome"],
+        correctAnswer: 3  // Option 3: Paris
+      },
+      {
+        id: 2,
+        question: "What is the boiling point of water in Celsius?",
+        options: ["90°C", "100°C", "110°C", "120°C"],
+        correctAnswer: 2  // Option 2: 100°C
+      },
+      {
+        id: 3,
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Venus", "Mars", "Jupiter"],
+        correctAnswer: 3  // Option 3: Mars
+      },
+      {
+        id: 4,
+        question: "What is the largest ocean on Earth?",
+        options: ["Atlantic", "Pacific", "Indian", "Arctic"],
+        correctAnswer: 2  // Option 2: Pacific
+      }
+    ];
+    
+    let current = 0;
+    let timer;
+    let timeLeft = 30;
+    const pointsKey = "quizPoints";
+    
+    function getPoints() {
+      return parseInt(localStorage.getItem(pointsKey)) || 0;
+    }
+    
+    function setPoints(p) {
+      localStorage.setItem(pointsKey, p);
+    }
+    
+    // Initialize points if not set
+    if (!localStorage.getItem(pointsKey)) setPoints(0);
+    
+    function updatePointsDisplay() {
+      document.getElementById("pointsDisplay").innerText = "Points: " + getPoints();
+    }
+    
+    // (ii) Load current question into table
+    function loadQuestion() {
+      const quizBody = document.getElementById("quizBody");
+      quizBody.innerHTML = "";
+      
+      if (current < questions.length) {
+        const q = questions[current];
+        // Question row
+        let row = document.createElement("tr");
+        let cell = document.createElement("td");
+        cell.colSpan = 2;
+        cell.innerText = q.question;
+        row.appendChild(cell);
+        quizBody.appendChild(row);
+        // Option rows
+        q.options.forEach((opt, index) => {
+          let rowOpt = document.createElement("tr");
+          let cellNum = document.createElement("td");
+          cellNum.innerText = (index + 1) + ".";
+          let cellOpt = document.createElement("td");
+          cellOpt.innerText = opt;
+          rowOpt.appendChild(cellNum);
+          rowOpt.appendChild(cellOpt);
+          quizBody.appendChild(rowOpt);
+        });
+      } else {
+        endQuiz();
+      }
+    }
+    
+    // End quiz: stop timer and hide quiz UI
+    function endQuiz() {
+      clearInterval(timer);
+      document.getElementById("quizTable").style.display = "none";
+      document.getElementById("answerInput").style.display = "none";
+      document.getElementById("submitBtn").style.display = "none";
+      document.getElementById("instructions").innerText = "Quiz Ended! Final Points: " + getPoints();
+    }
+    
+    // Update timer every second
+    function updateTimer() {
+      timeLeft--;
+      document.getElementById("timerDisplay").innerText = "Time Left: " + timeLeft + "s";
+      if (timeLeft <= 0) {
+        endQuiz();
+      }
+    }
+    
+    // (iii) Check answer and update points
+    document.getElementById("submitBtn").addEventListener("click", function() {
+      const answer = parseInt(document.getElementById("answerInput").value);
+      const q = questions[current];
+      if (answer === q.correctAnswer) {
+        setPoints(getPoints() + 5);
+      }
+      updatePointsDisplay();
+      document.getElementById("answerInput").value = "";
+      current++;
+      loadQuestion();
+    });
+    
+    // Start quiz: randomize questions, show UI, and start timer
+    document.getElementById("startBtn").addEventListener("click", function() {
+      this.style.display = "none";
+      document.getElementById("quizTable").style.display = "";
+      questions.sort(() => Math.random() - 0.5); // Randomize order
+      current = 0;
+      timeLeft = 30;
+      updatePointsDisplay();
+      loadQuestion();
+      timer = setInterval(updateTimer, 1000);
+    });
+    
+    // Reset points to zero on button click
+    document.getElementById("resetBtn").addEventListener("click", function() {
+      setPoints(0);
+      updatePointsDisplay();
+    });
+  </script>
+</body>
+</html>
