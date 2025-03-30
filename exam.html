@@ -10,8 +10,8 @@
     input, button { margin: 10px; padding: 8px; }
   </style>
 </head>
-<body>
   <h1>Random Quiz</h1>
+  <ion-icon name="help-circle-outline" size="large"></ion-icon>
   <p id="instructions">
     You have 30 seconds to answer as many questions as possible. Type an integer (1–4) for your answer.
     Each correct answer gives you 5 points, which are stored in localStorage. Click "Reset Points" to clear your score.
@@ -155,5 +155,7 @@
       updatePointsDisplay();
     });
   </script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
